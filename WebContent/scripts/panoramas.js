@@ -18,7 +18,15 @@ function getRoute(markers) {
 			"lat" : markers[1].getPosition().lat(),
 			"lng" : markers[1].getPosition().lng()
 	}
-	google.script.run.withSuccessHandler(onSuccessGetRouteForLocations).getRouteForLocations(origin, destination);
+	//google.script.run.withSuccessHandler(onSuccessGetRouteForLocations).getRouteForLocations(origin, destination);
+	var route
+	$.ajax({
+		type: "POST",
+		url: "http://localhost:8081/getRouteForLocations/",
+		data: {origin, destination},
+		dataType: "json",
+		success: onSuccessGetRouteForLocations(route)
+	});
 }
 
 function onSuccessGetRouteForLocations(route) {
